@@ -14,3 +14,22 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+class Theme(models.Model):
+    theme = models.CharField(max_length=50, unique=True, verbose_name='Название')
+
+    class Meta:
+        verbose_name = 'Тема'
+        verbose_name_plural = 'Темы'
+
+    def __str__(self):
+        return self.theme
+
+
+class ArticleTheme(models.Model):
+    article = models.ForeignKey(Article, related_name='scopes', on_delete=models.CASCADE)
+    theme = models.ForeignKey(Theme, related_name='scopes', on_delete=models.CASCADE)
+    is_main = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.is_main}'
